@@ -26,7 +26,7 @@ def uploader(file_name, link=True):
     else:
         return history[0][2]
 
-def Notify(UserName,File,What=None):
+def Notify(page,File,What=None):
 
 def commit(old_text, new_text, page, summary):
     """Show diff and submit text to page."""
@@ -56,6 +56,8 @@ def main():
     motd_uploader = uploader(motd_file, link=False)
     potd_uploader_talk_page = pywikibot.User(SITE, potd_uploader).getUserTalkPage()
     motd_uploader_talk_page = pywikibot.User(SITE, motd_uploader).getUserTalkPage()
+    Notify(potd_uploader_talk_page,potd_file,What="POTD")
+    Notify(motd_uploader_talk_page,motd_file,What="MOTD")
     
 
 
