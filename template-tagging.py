@@ -27,7 +27,7 @@ def out(text, newline=True, date=False, color=None):
     if color:
         text = "\03{%s}%s\03{default}" % (color, text)
     dstr = (
-        "%s: " % datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        "%s: " % TODAY.strftime("%Y-%m-%d %H:%M:%S")
         if date
         else ""
     )
