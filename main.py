@@ -27,6 +27,10 @@ def uploader(file_name, link=True):
         return history[0][2]
 
 def Notify(page,File,What=None):
+    if What = "POTD":
+        new_text = old_text + "\n\n== [[%s|POTD Notification]] ==\n{{POTDpromotion|%s}} //~~~~" % (get_potd_page_today(),File,)
+    elif What = "MOTD":
+        new_text = old_text + "\n\n== [[%s|MOTD Notification]] ==\n{{MOTDpromotion|%s}} //~~~~" % (get_motd_page_today(),File,)
     
 
 def commit(old_text, new_text, page, summary):
