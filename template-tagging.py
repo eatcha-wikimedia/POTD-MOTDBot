@@ -101,7 +101,7 @@ def main():
     except:
         pass
     try:
-        tagPOTD(motd_file)
+        tagMOTD(motd_file)
     except:
         pass
     
