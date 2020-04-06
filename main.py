@@ -16,6 +16,16 @@ def get_potd_page_today():
 def getfile(text):
     return ("File:"+re.search(r"{{(?:\s*)[MmPp]otd(?:[_\s\-]|)[Ff]ilename(?:\s*)\|(?:1=|)(.*?)\|", text).group(1))
 
+def uploader(file_name, link=True):
+    """Return the link to the user that uploaded this file"""
+    history = pywikibot.Page(SITE,file_name).getVersionHistory(reverseOrder=True, total=1)
+    if not history:
+        return "Unknown"
+    if link:
+        return "[[User:%s|%s]]" % (history[0][2], history[0][2])
+    else:
+        return history[0][2]
+
 def Notify(UserName,File,What=None):
 
 def commit(old_text, new_text, page, summary):
@@ -42,6 +52,10 @@ def main():
     motd_text = motd_page.get()
     potd_file = getfile(potd_text)
     motd_file = getfile(motd_text)
+    potd_uploader = uploader(potd_file, link=False)
+    motd_uploader = uploader(motd_file, link=False)
+    potd_uploader_talk_page = pywikibot.User(SITE, potd_uploader).getUserTalkPage()
+    motd_uploader_talk_page = pywikibot.User(SITE, motd_uploader).getUserTalkPage()
     
 
 
