@@ -65,6 +65,7 @@ def main():
     
     motd_file = getfile(motd_text)
     potd_uploader = uploader(potd_file, link=False)
+    motd_uploader = uploader(motd_file, link=False)
     print(potd_page)
     print(potd_text)
     print(potd_file)
@@ -73,7 +74,7 @@ def main():
     print(motd_text)
     print(motd_file)
     print(motd_uploader)
-    motd_uploader = uploader(motd_file, link=False)
+    
     
     potd_uploader_talk_page = ('User talk:'+potd_uploader)
     motd_uploader_talk_page = ('User talk:'+motd_uploader)
