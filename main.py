@@ -14,6 +14,9 @@ def get_motd_page_today():
 def get_potd_page_today():
     return 'Template:Potd/%s' % informatdate()
 
+def getfile(What=None,text):
+    return ("File:"+re.search(r"{{(?:\s*)[MmPp]otd(?:[_\s\-]|)[Ff]ilename(?:\s*)\|(?:1=|)(.*?)\|", text).group(1))
+
 def Notify(UserName,File,What=None):
     
 
@@ -35,8 +38,8 @@ def out(text, newline=True, date=False, color=None):
     pywikibot.stdout("%s%s" % (dstr, text), newline=newline)
 
 def main():
-    potd_page = pywikibot.Page(G_Site, get_potd_page_today())
-    motd_page = pywikibot.Page(G_Site, get_potd_page_today())
+    potd_page = pywikibot.Page(SITE, get_potd_page_today())
+    motd_page = pywikibot.Page(SITE, get_potd_page_today())
     potd_old_text = potd_page.get()
     motd_old_text = motd_page.get()
 
