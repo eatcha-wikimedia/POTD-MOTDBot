@@ -65,10 +65,10 @@ def main():
     motd_uploader = uploader(motd_file, link=False)
 
     if  potd_uploader:
-        potd_uploader_talk_page = ('User talk:'+potd_uploader)
+        potd_uploader_talk_page = pywikibot.Page(SITE, ('User talk:'+potd_uploader))
         Notify(potd_uploader_talk_page,potd_file,What="POTD")
     if  motd_uploader:
-        motd_uploader_talk_page = ('User talk:'+motd_uploader)
+        motd_uploader_talk_page = pywikibot.Page(SITE, ('User talk:'+motd_uploader))
         Notify(motd_uploader_talk_page,motd_file,What="MOTD")
 
 
