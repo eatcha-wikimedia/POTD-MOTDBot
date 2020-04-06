@@ -33,12 +33,58 @@ def out(text, newline=True, date=False, color=None):
     )
     pywikibot.stdout("%s%s" % (dstr, text), newline=newline)
 
+def findEndOfTemplate(text, template):
+    m = re.search(r"{{\s*%s" % template, text)
+    if not m:
+        return 0
+
+    lvl = 0
+    cp = m.start() + 2
+
+    while cp < len(text):
+        ns = text.find("{{", cp)
+        ne = text.find("}}", cp)
+
+        # If we see no end tag, we give up
+        if ne == -1:
+            return 0
+
+        # Handle case when there are no more start tags
+        if ns == -1:
+            if not lvl:
+                return ne + 2
+            else:
+                lvl -= 1
+                cp = ne + 2
+
+        elif not lvl and ne < ns:
+            return ne + 2
+        elif ne < ns:
+            lvl -= 1
+            cp = ne + 2
+        else:
+            lvl += 1
+            cp = ns + 2
+    # Apparently we never found it
+    return 0
+
 def tagPOTD(filename):
     page = pywikibot.Page(SITE, filename)
+    old_text = page.get()
+    words = ['a']
+    if words in old_text:
+        return
+
+    new_text = None
     
 
 def tagMOTD(filename):
     page = pywikibot.Page(SITE, filename)
+    words = ['a']
+    if words in old_text:
+        return
+
+    new_text = None
 
 
 def main():
