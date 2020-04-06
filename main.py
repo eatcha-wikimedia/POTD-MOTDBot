@@ -57,30 +57,20 @@ def out(text, newline=True, date=False, color=None):
 def main():
     potd_page = pywikibot.Page(SITE, get_potd_page_today())
     motd_page = pywikibot.Page(SITE, get_motd_page_today())
-    
     potd_text = potd_page.get()
-
     motd_text = motd_page.get()
     potd_file = getfile(potd_text)
-    
     motd_file = getfile(motd_text)
     potd_uploader = uploader(potd_file, link=False)
     motd_uploader = uploader(motd_file, link=False)
-    print(potd_page)
-    print(potd_text)
-    print(potd_file)
-    print(potd_uploader)
-    print(motd_page)
-    print(motd_text)
-    print(motd_file)
-    print(motd_uploader)
-    
-    
-    potd_uploader_talk_page = ('User talk:'+potd_uploader)
-    motd_uploader_talk_page = ('User talk:'+motd_uploader)
-    Notify(potd_uploader_talk_page,potd_file,What="POTD")
-    Notify(motd_uploader_talk_page,motd_file,What="MOTD")
-    
+
+    if  potd_uploader:
+        potd_uploader_talk_page = ('User talk:'+potd_uploader)
+        Notify(potd_uploader_talk_page,potd_file,What="POTD")
+    if  motd_uploader:
+        motd_uploader_talk_page = ('User talk:'+motd_uploader)
+        Notify(motd_uploader_talk_page,motd_file,What="MOTD")
+
 
 
 if __name__ == "__main__":
