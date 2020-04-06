@@ -38,8 +38,11 @@ def out(text, newline=True, date=False, color=None):
 def main():
     potd_page = pywikibot.Page(SITE, get_potd_page_today())
     motd_page = pywikibot.Page(SITE, get_potd_page_today())
-    potd_old_text = potd_page.get()
-    motd_old_text = motd_page.get()
+    potd_text = potd_page.get()
+    motd_text = motd_page.get()
+    potd_file = getfile(potd_text)
+    motd_file = getfile(motd_text)
+    
 
 
 if __name__ == "__main__":
