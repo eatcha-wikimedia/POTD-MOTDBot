@@ -20,7 +20,7 @@ def commit(old_text, new_text, page, summary):
     """Show diff and submit text to page."""
     out("\nAbout to make changes at : '%s'" % page.title())
     pywikibot.showDiff(old_text, new_text)
-    page.put(new_text, summary=summary, watchArticle=True, minorEdit=False)
+    #page.put(new_text, summary=summary, watchArticle=True, minorEdit=False)
 
 def out(text, newline=True, date=False, color=None):
     """Just output some text to the consoloe or log."""
@@ -33,9 +33,27 @@ def out(text, newline=True, date=False, color=None):
     )
     pywikibot.stdout("%s%s" % (dstr, text), newline=newline)
 
+def tagPOTD(filename):
+    page = pywikibot.Page(SITE, filename)
+    
+
+def tagMOTD(filename):
+    page = pywikibot.Page(SITE, filename)
+
+
 def main():
     potd_file = getfile(pywikibot.Page(SITE, get_potd_page_today()).get())
     motd_file = getfile(pywikibot.Page(SITE, get_motd_page_today()).get())
+    try:
+        tagPOTD(potd_file)
+    except:
+        pass
+    try:
+        tagPOTD(motd_file)
+    except:
+        pass
+    
+    
 
 
 
