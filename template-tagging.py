@@ -71,6 +71,8 @@ def findEndOfTemplate(text, template):
 
 def tagPOTD(filename):
     page = pywikibot.Page(SITE, filename)
+    if page.isRedirectPage():
+        page = pywikibot.Page(SITE, page.getRedirectTarget().title())
     old_text = page.get()
     words = ['a']
     if words in old_text:
@@ -81,6 +83,9 @@ def tagPOTD(filename):
 
 def tagMOTD(filename):
     page = pywikibot.Page(SITE, filename)
+    if page.isRedirectPage():
+        page = pywikibot.Page(SITE, page.getRedirectTarget().title())
+    old_text = page.get()
     words = ['a']
     if words in old_text:
         return
