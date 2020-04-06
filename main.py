@@ -20,7 +20,7 @@ def uploader(file_name, link=True):
     """Return the link to the user that uploaded this file"""
     history = pywikibot.Page(SITE,file_name).getVersionHistory(reverseOrder=True, total=1)
     if not history:
-        return "Unknown"
+        return None
     if link:
         return "[[User:%s|%s]]" % (history[0][2], history[0][2])
     else:
@@ -35,7 +35,6 @@ def Notify(page,File,What=None):
         new_text = old_text + "\n\n== [[%s|MOTD Notification]] ==\n{{subst:MOTDpromotion|%s}} //~~~~" % (get_motd_page_today(),File,)
         EditSummary = "MOTD Notification for [[%s]]" % File
     commit(old_text, new_text, page, EditSummary)
-    
 
 def commit(old_text, new_text, page, summary):
     """Show diff and submit text to page."""
