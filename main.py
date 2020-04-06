@@ -27,6 +27,7 @@ def uploader(file_name, link=True):
         return history[0][2]
 
 def Notify(page,File,What=None):
+    
 
 def commit(old_text, new_text, page, summary):
     """Show diff and submit text to page."""
@@ -47,7 +48,7 @@ def out(text, newline=True, date=False, color=None):
 
 def main():
     potd_page = pywikibot.Page(SITE, get_potd_page_today())
-    motd_page = pywikibot.Page(SITE, get_potd_page_today())
+    motd_page = pywikibot.Page(SITE, get_motd_page_today())
     potd_text = potd_page.get()
     motd_text = motd_page.get()
     potd_file = getfile(potd_text)
