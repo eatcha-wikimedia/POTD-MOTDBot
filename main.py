@@ -54,8 +54,10 @@ def out(text, newline=True, date=False, color=None):
     pywikibot.stdout("%s%s" % (dstr, text), newline=newline)
 
 def main():
-    potd_uploader = uploader(getfile(pywikibot.Page(SITE, get_potd_page_today()).get()), link=False)
-    motd_uploader = uploader(getfile(pywikibot.Page(SITE, get_motd_page_today()).get()), link=False)
+    potd_file = getfile(pywikibot.Page(SITE, get_potd_page_today()).get())
+    motd_file = getfile(pywikibot.Page(SITE, get_motd_page_today()).get())
+    potd_uploader = uploader(potd_file, link=False)
+    motd_uploader = uploader(motd_file, link=False)
 
     if  potd_uploader:
         potd_uploader_talk_page = pywikibot.Page(SITE, ('User talk:'+potd_uploader))
