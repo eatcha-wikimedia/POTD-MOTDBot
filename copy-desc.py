@@ -17,7 +17,7 @@ def get_page_name(what,dateinformat):
         page_name = "Template:Potd/%s" % dateinformat
     return page_name
 
-def get_valid_langs(what,basepage):
+def get_valid_langs(basepage):
     """returns a list of all language pages that are exists"""
     langs_array = [
         'af', 'am', 'an', 'ar', 'as', 'az',
@@ -55,9 +55,32 @@ def get_valid_langs(what,basepage):
         if page.exists():
             existant_lang_pages.append(lang_page_name)
     return existant_lang_pages
+
+def handle(stuff):
+    dateinformat = informatdate(1) # how many days before
+    page_name = get_page_name(stuff,dateinformat)
+    page = pywikibot.Page(
+        SITE,
+        page_name,)
+    if page.exists():
+        langs_array = get_valid_langs(page_name)
+        for lang in langs_array:
+            lang_page = pywikibotself.Page(
+                SITE,
+                lang,
+                )
             
+        
+    
 
 def main():
+    day_pages = [
+        "POTD",
+        "MOTD",
+        ]
+    for stuff in day_pages:
+        handle(stuff)
+        
     
 
 if __name__ == "__main__":
