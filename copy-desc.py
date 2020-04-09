@@ -4,9 +4,13 @@ import pywikibot
 from datetime import datetime
 
 
-def get_day_stuff(what,dateinformat):
+def get_page_name(what,dateinformat):
+    page_name = None
     if what is "MOTD":
+        page_name = "Template:Motd/%s" % dateinformat
     if what is "POTD":
+        page_name = "Template:Potd/%s" % dateinformat
+    return page_name
 
 def main():
     
