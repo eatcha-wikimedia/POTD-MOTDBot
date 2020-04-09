@@ -56,6 +56,9 @@ def get_valid_langs(basepage):
             existant_lang_pages.append(lang_page_name)
     return existant_lang_pages
 
+def add_in_file(filename,list_of_lang_templates):
+    pass
+
 def handle(stuff):
     dateinformat = informatdate(1) # how many days before
     page_name = get_page_name(stuff,dateinformat)
@@ -82,12 +85,8 @@ def handle(stuff):
                 print(e)
             lang_add_template = "{{%s|%s}}\n" % (re.search(r"\(([a-z]{2,3})\)",lang).group(1), lang_text)
             lang_add_list.append(lang_add_template)
-    for p in lang_add_list:
-        print(p)
-            
-            
-        
-    
+    add_in_file(filename,lang_add_list)
+
 
 def main():
     day_pages = [
