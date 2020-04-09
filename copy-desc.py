@@ -5,6 +5,10 @@ from datetime import datetime
 
 SITE = pywikibot.Site()
 
+def informatdate(prev):
+    """Current date in yyyy-mm-dd format."""
+    return (datetime.utcnow()-timedelta(days=prev)).strftime('%Y-%m-%d')
+
 def get_page_name(what,dateinformat):
     page_name = None
     if what is "MOTD":
