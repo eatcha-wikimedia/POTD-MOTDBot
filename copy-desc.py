@@ -69,12 +69,19 @@ def handle(stuff):
     print("now processing - " , stuff, " - ", filename)
     if page.exists():
         langs_array = get_valid_langs(page_name)
+        lang_add_list = []
         for lang in langs_array:
             lang_page = pywikibotself.Page(
                 SITE,
                 lang,
                 )
-            lang_text = re.search(r"[Dd]escription\|(?:1=|)(.*?)\|", lang_page.get()).group(1)
+            try:
+                lang_text = re.search(r"[Dd]escription\|(?:1=|)(.*?)\|", lang_page.get()).group(1)
+            except Exception as e:
+                print(e)
+            lang_add_template = "{{%s|}}\n" % lang_text
+            lang_add_list.append(lang_add_template)
+    print(lang_add_template)
             
             
         
