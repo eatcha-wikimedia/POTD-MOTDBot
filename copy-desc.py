@@ -77,12 +77,13 @@ def handle(stuff):
                 lang,
                 )
             try:
-                lang_text = re.search(r"[Dd]escription\|(?:1=|)(.*?)\|", lang_page.get()).group(1)
+                lang_text = re.search(r"[Dd]escription\|(?:1=|)(.*)\|(?:2=[a-z]{2,3}|(?:[a-z]{2,3}))\|", lang_page.get()).group(1)
             except Exception as e:
                 print(e)
-            lang_add_template = "{{%s|}}\n" % lang_text
+            lang_add_template = "{{%s|%s}}\n" % (lang, lang_text)
             lang_add_list.append(lang_add_template)
-    print(lang_add_list)
+    for p in lang_add_list:
+        print(p)
             
             
         
