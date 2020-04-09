@@ -63,7 +63,7 @@ def handle(stuff):
         SITE,
         page_name,)
     try:
-        filename = re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get())
+        filename = re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get()).group(1)
     except Exception as e:
         print(e)
     print("now processing - " , stuff, " - ", filename)
@@ -74,6 +74,8 @@ def handle(stuff):
                 SITE,
                 lang,
                 )
+            lang_text = re.search(r"[Dd]escription\|(?:1=|)(.*?)\|", lang_page.get()).group(1)
+            
             
         
     
