@@ -71,6 +71,7 @@ def handle(stuff):
         langs_array = get_valid_langs(page_name)
         lang_add_list = []
         for lang in langs_array:
+            print(lang)
             lang_page = pywikibot.Page(
                 SITE,
                 lang,
@@ -81,7 +82,7 @@ def handle(stuff):
                 print(e)
             lang_add_template = "{{%s|}}\n" % lang_text
             lang_add_list.append(lang_add_template)
-    print(lang_add_template)
+    print(lang_add_list)
             
             
         
