@@ -43,7 +43,7 @@ def get_valid_langs(basepage):
         'vi', 'vo',
         'wa',
         'xh',
-        'zh', 'zh-hans', 'zh-hant', 'zu'
+        'zh', 'zh-hans', 'zh-hant', 'zu',
         ]
     existant_lang_pages = []
     for lang in langs_array:
