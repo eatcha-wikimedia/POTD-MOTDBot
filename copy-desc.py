@@ -62,6 +62,11 @@ def handle(stuff):
     page = pywikibot.Page(
         SITE,
         page_name,)
+    try:
+        filename = re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get())
+    except Exception as e:
+        print(e)
+    print("now processing - " , stuff, " - ", filename)
     if page.exists():
         langs_array = get_valid_langs(page_name)
         for lang in langs_array:
