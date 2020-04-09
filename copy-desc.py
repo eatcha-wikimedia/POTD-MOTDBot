@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 import pywikibot
-from datetime import datetime
+from datetime import datetime, timedelta
 
 SITE = pywikibot.Site()
 
