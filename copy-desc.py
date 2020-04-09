@@ -3,6 +3,7 @@ import re
 import pywikibot
 from datetime import datetime
 
+SITE = pywikibot.Site()
 
 def get_page_name(what,dateinformat):
     page_name = None
@@ -12,7 +13,8 @@ def get_page_name(what,dateinformat):
         page_name = "Template:Potd/%s" % dateinformat
     return page_name
 
-def get_langs(what,basepage):
+def get_valid_langs(what,basepage):
+    """returns a list of all language pages that are exists"""
     langs = [
         'af', 'am', 'an', 'ar', 'as', 'az',
         'be', 'bg', 'bn', 'br', 'bs',
@@ -39,7 +41,17 @@ def get_langs(what,basepage):
         'xh',
         'zh', 'zh-hans', 'zh-hant', 'zu'
         ]
-
+    existant_lang_pages = []
+    for lang in langs:
+        lang_page_name = basepage + "_(%s)" % lang
+        page = pywikibot.Page(
+            SITE,
+            lang_page_name,
+            )
+        if page.exists():
+            existant_lang_pages.append(lang_page_name)
+    return existant_lang_pages
+            
 
 def main():
     
