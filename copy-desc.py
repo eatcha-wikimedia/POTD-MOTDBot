@@ -19,7 +19,7 @@ def get_page_name(what,dateinformat):
 
 def get_valid_langs(what,basepage):
     """returns a list of all language pages that are exists"""
-    langs = [
+    langs_array = [
         'af', 'am', 'an', 'ar', 'as', 'az',
         'be', 'bg', 'bn', 'br', 'bs',
         'ca', 'cs', 'cy',
@@ -46,7 +46,7 @@ def get_valid_langs(what,basepage):
         'zh', 'zh-hans', 'zh-hant', 'zu'
         ]
     existant_lang_pages = []
-    for lang in langs:
+    for lang in langs_array:
         lang_page_name = basepage + "_(%s)" % lang
         page = pywikibot.Page(
             SITE,
