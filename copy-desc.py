@@ -57,7 +57,13 @@ def get_valid_langs(basepage):
     return existant_lang_pages
 
 def add_in_file(filename,list_of_lang_templates):
-    pass
+    file = 'File:'+filename
+    page = pywikibot.Page(
+        SITE,
+        file,
+        )
+    old_text = page.get()
+
 
 def handle(stuff):
     dateinformat = informatdate(1) # how many days before
