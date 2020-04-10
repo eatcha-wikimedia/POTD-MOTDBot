@@ -2,6 +2,9 @@
 import re
 import pywikibot
 from datetime import datetime, timedelta
+from googletrans import Translator
+translator = Translator()
+
 
 SITE = pywikibot.Site()
 
@@ -67,9 +70,12 @@ def add_to_file(filename,list_of_lang_templates):
     for template in list_of_lang_templates:
         text_to_append = "\n%s" % template
     updated_desc = desc_text + text_to_append
-    new_text = re.sub(desc_text,updated_desc,old_text)
+    new_text = old_text.replace(desc_text,updated_desc)
     print(new_text)
-        
+
+def detectUnIdentifedlangs():
+    regex = r"description={{[\s\S]*?}}\n\|"
+    
     
 def checkIfTemplatePresent(langcode,text):
     regex = "{{(?:\s*)%s(?:\s*)\|" % langcode
@@ -78,6 +84,8 @@ def checkIfTemplatePresent(langcode,text):
         re.search(regex,text).group()
     except:
         return False
+    
+    text_updated = re.sub({{(?:\s*)%s(?:\s*)\|.*?}})
 
     return True
     
