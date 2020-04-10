@@ -62,6 +62,14 @@ def add_to_file(filename,list_of_lang_templates):
         filename,
         )
     old_text = page.get()
+    desc_text = re.search(r"\|[Dd]escription=([\s\S]*?)\n\|",old_text).group(1)
+    text_to_append = ""
+    for template in list_of_lang_templates:
+        text_to_append = "\n%s" % template
+    updated_desc = desc_text + text_to_append
+    new_text = re.sub(desc_text,updated_desc,old_text)
+    print(new_text)
+        
     
 def checkIfTemplatePresent(langcode,text):
     regex = "{{(?:\s*)%s(?:\s*)\|" % langcode
