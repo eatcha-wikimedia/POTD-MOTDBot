@@ -73,8 +73,13 @@ def add_to_file(filename,list_of_lang_templates):
     new_text = old_text.replace(desc_text,updated_desc)
     print(new_text)
 
-def detectUnIdentifedlangs():
-    regex = r"description={{[\s\S]*?}}\n\|"
+def detectUnIdentifedlangs(text):
+    regex = r"description=({{[\s\S]*?}}\n\|)"
+    try:
+        text_to_remove = re.search(regex,text).group(1)
+    except:
+        text_to_remove = ""
+    without_identfied_langs = re.sub(text_to_remove,"",text)
     
     
 def checkIfTemplatePresent(langcode,text):
