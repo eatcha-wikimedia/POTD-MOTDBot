@@ -56,14 +56,23 @@ def get_valid_langs(basepage):
             existant_lang_pages.append(lang_page_name)
     return existant_lang_pages
 
-def add_in_file(filename,list_of_lang_templates):
-    file = 'File:'+filename
+def add_to_file(filename,list_of_lang_templates):
     page = pywikibot.Page(
         SITE,
-        file,
+        filename,
         )
     old_text = page.get()
+    
+def checkIfTemplatePresent(langcode,text):
+    regex = "{{(?:\s*)%s(?:\s*)\|" % langcode
 
+    try:
+        re.search(regex,text).group()
+    except:
+        return False
+
+    return True
+    
 
 def handle(stuff):
     dateinformat = informatdate(1) # how many days before
@@ -72,7 +81,7 @@ def handle(stuff):
         SITE,
         page_name,)
     try:
-        filename = re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get()).group(1)
+        filename = "File:"+re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get()).group(1)
     except Exception as e:
         print(e)
     print("now processing - " , stuff, " - ", filename)
@@ -90,8 +99,11 @@ def handle(stuff):
             except Exception as e:
                 print(e)
             lang_add_template = "{{%s|%s}}" % (re.search(r"\(([a-z]{2,3})\)",lang).group(1), lang_text)
-            lang_add_list.append(lang_add_template)
-    add_in_file(filename,lang_add_list)
+            if checkIfTemplatePresent(re.search(r"\(([a-z]{2,3})\)",lang).group(1), pywikibot.Page(SITE,filename,).get()) is not True:
+                lang_add_list.append(lang_add_template)
+            else:
+                continue
+    add_to_file(filename,lang_add_list)
 
 
 def main():
