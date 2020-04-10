@@ -90,7 +90,7 @@ def checkIfTemplatePresent(langcode,text):
     except:
         return False
     
-    text_updated = re.sub({{(?:\s*)%s(?:\s*)\|.*?}})
+
 
     return True
     
