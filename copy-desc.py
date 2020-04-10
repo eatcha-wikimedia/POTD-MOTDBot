@@ -74,7 +74,7 @@ def add_to_file(filename,list_of_lang_templates):
     print(new_text)
 
 def detectUnIdentifedlangs(text):
-    regex = r"description=({{[\s\S]*?}}\n\|)"
+    regex = r"description(?:\s*)=(?:\s*)({{[\s\S]*?}})\n(?:\s*)\|"
     try:
         text_to_remove = re.search(regex,text).group(1)
     except:
