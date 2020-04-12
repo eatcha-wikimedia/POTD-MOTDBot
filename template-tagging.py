@@ -4,7 +4,7 @@ from datetime import timedelta,datetime
 
 TODAY = datetime.utcnow()
 SITE = pywikibot.Site()
-time_to_change = 2
+time_to_change = 10
 def informatdate():
     return (TODAY+timedelta(time_to_change)).strftime('%Y-%m-%d')
 
@@ -95,8 +95,6 @@ def tagMOTD(filename):
     words = ['a']
     if words in old_text:
         return
-
-    new_text = None
     word1 = "{{Media of the day"
     word2 = "{{media of the day"
     redir = "#REDIRECT"
