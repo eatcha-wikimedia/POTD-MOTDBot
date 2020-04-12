@@ -107,11 +107,11 @@ def Tagger(filename,what):
 
 def main():
     try:
-        tagPOTD(getfile(pywikibot.Page(SITE, get_page_today("POTD")).get()))
+        Tagger(getfile(pywikibot.Page(SITE, get_page_today("POTD")).get()),"POTD")
     except:
         pass
     try:
-        tagMOTD(getfile(pywikibot.Page(SITE, get_page_today("MOTD")).get()))
+        Tagger(getfile(pywikibot.Page(SITE, get_page_today("MOTD")).get()),"MOTD")
     except:
         pass
 
