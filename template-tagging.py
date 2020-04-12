@@ -9,8 +9,7 @@ def informatdate():
     return (TODAY+timedelta(time_to_change)).strftime('%Y-%m-%d')
 
 def formatMotdTemplateTag():
-    gar = (TODAY+timedelta(time_to_change)).strftime('%Y|%-m|%-d')
-    return gar
+    return (TODAY+timedelta(time_to_change)).strftime('%Y|%-m|%-d')
 
 def get_page_today(what):
     if what is "MOTD":
