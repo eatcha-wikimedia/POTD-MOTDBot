@@ -33,6 +33,7 @@ def out(text, newline=True, date=False, color=None):
     )
     pywikibot.stdout("%s%s" % (dstr, text), newline=newline)
 
+# The following was written by Zitrax on GitHub
 def findEndOfTemplate(text, template):
     """Find end of any template, by Zitrax"""
     m = re.search(r"{{\s*%s" % template, text)
