@@ -1,5 +1,6 @@
 import pywikibot
-import re, datetime,timedelta
+import re
+from datetime import timedelta,datetime
 
 TODAY = datetime.datetime.utcnow()
 SITE = pywikibot.Site()
