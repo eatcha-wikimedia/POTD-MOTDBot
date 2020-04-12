@@ -119,6 +119,7 @@ def tagMOTD(filename):
     if page.isRedirectPage():
         page = pywikibot.Page(SITE, page.getRedirectTarget().title())
     old_text = page.get()
+    print("old text got")
     word1 = "{{Media of the day"
     word2 = "{{media of the day"
     redir = "#REDIRECT"
