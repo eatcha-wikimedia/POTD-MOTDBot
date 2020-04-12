@@ -1,5 +1,5 @@
 import pywikibot
-import re
+import re,sys
 from datetime import timedelta,datetime
 
 TODAY = datetime.utcnow()
@@ -117,7 +117,7 @@ def tagMOTD(filename):
     print("motd")
     page = pywikibot.Page(SITE, filename)
     if page.isRedirectPage():
-    page = pywikibot.Page(SITE, page.getRedirectTarget().title())
+        page = pywikibot.Page(SITE, page.getRedirectTarget().title())
     old_text = page.get()
     word1 = "{{Media of the day"
     word2 = "{{media of the day"
