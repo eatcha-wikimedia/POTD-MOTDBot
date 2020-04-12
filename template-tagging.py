@@ -70,45 +70,24 @@ def findEndOfTemplate(text, template):
     # Apparently we never found it
     return 0
 
-def tagPOTD(filename):
-    print("potd")
+def Tagger(filename,what):
     page = pywikibot.Page(SITE, filename)
     if page.isRedirectPage():
         page = pywikibot.Page(SITE, page.getRedirectTarget().title())
     old_text = page.get()
-    if "{{picture of the day" in old_text.lower():
+    if what is "POTD":
+        check_text = "{{picture of the day"
+        summary = "POTD tagging, see [[Template:Potd/%s]]" % informatdate()
+        template = "\n{{Picture of the day|%s}}" % formatMotdTemplateTag()
+    if what is "MOTD":
+        check_text = "{{media of the day"
+        summary = "MOTD tagging, from [[Template:Motd/%s]]" % informatdate()
+        template = "\n{{Media of the day|%s}}\n" % formatMotdTemplateTag()
+    if check_text in old_text.lower():
         out("Tag already there, exiting program.", color="lightyellow")
         return
     end = findEndOfTemplate(old_text, "[Aa]ssessments")
-    new_text = (
-            old_text[:end]
-            + "\n{{Picture of the day|%s}}" % formatMotdTemplateTag()
-            + old_text[end:]
-        )
-
-    try:
-        commit(
-            old_text, new_text, page, "POTD tagging, see [[Template:Potd/%s]]" % informatdate()
-        )
-    except pywikibot.LockedPage as error:
-        out(
-            "Page is locked '%s', but ignoring since it's just the motd tag."
-            % error,
-            color="lightyellow",
-        )
-
-def tagMOTD(filename):
-    page = pywikibot.Page(SITE, filename)
-    if page.isRedirectPage():
-        page = pywikibot.Page(SITE, page.getRedirectTarget().title())
-    old_text = page.get()
-
-    if "{{media of the day" in old_text.lower():
-        out("Tag already there, exiting program.", color="lightyellow")
-        return
-
-    end = findEndOfTemplate(old_text, "[Ii]nformation")
-    if "{{assessment}}" not in old_text.lower():
+    if "{{assessment}}" not in old_text.lower() and what is "MOTD":
         new_text = (
                 old_text[:end]
                 + "\n=={{Assessment}}==\n{{Media of the day|%s}}\n" % formatMotdTemplateTag()
@@ -117,20 +96,14 @@ def tagMOTD(filename):
     else:
         new_text = (
                 old_text[:end]
-                + "\n{{Media of the day|%s}}\n" % formatMotdTemplateTag()
+                + template
                 + old_text[end:]
-                )
+            )
 
     try:
-        commit(
-            old_text, new_text, page, "MOTD tagging, from [[Template:Motd/%s]]" % informatdate()
-        )
+        commit(old_text, new_text, page, summary,)
     except pywikibot.LockedPage as error:
-        out(
-            "Page is locked '%s', but ignoring since it's just the motd tag."
-            % error,
-            color="lightyellow",
-        )
+        out("Page is locked '%s', but ignoring since it's just the motd tag."% error, color="lightyellow",)
 
 def main():
     try:
