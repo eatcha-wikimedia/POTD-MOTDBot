@@ -103,7 +103,7 @@ def tagPOTD(filename):
 
     try:
         commit(
-            old_text, new_text, file_page, "POTD tagging, see [[Template:Potd/%s]]" % informatdate()
+            old_text, new_text, page, "POTD tagging, see [[Template:Potd/%s]]" % informatdate()
         )
     except pywikibot.LockedPage as error:
         out(
@@ -149,7 +149,7 @@ def tagMOTD(filename):
 
     try:
         commit(
-            old_text, new_text, file_page, "MOTD tagging, from [[Template:Motd/%s]]" % informatdate()
+            old_text, new_text, page, "MOTD tagging, from [[Template:Motd/%s]]" % informatdate()
         )
     except pywikibot.LockedPage as error:
         out(
