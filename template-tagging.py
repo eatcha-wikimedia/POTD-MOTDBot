@@ -4,7 +4,7 @@ from datetime import timedelta,datetime
 
 TODAY = datetime.utcnow()
 SITE = pywikibot.Site()
-time_to_change = 10
+time_to_change = 8
 def informatdate():
     return (TODAY+timedelta(time_to_change)).strftime('%Y-%m-%d')
 
