@@ -165,10 +165,9 @@ def main():
         tagPOTD(potd_file)
     except:
         pass
-    try:
-        tagMOTD(motd_file)
-    except:
-        pass
+
+    tagMOTD(motd_file)
+
 
 
 if __name__ == "__main__":
