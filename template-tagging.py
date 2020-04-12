@@ -84,7 +84,35 @@ def tagPOTD(filename):
     if words in old_text:
         return
 
-    new_text = None
+    word1 = "Picture of the day"
+    word2 = "picture of the day"
+    redir = "#REDIRECT"
+    if word1 in old_text: 
+        out("Tag already there, exiting program.", color="lightred")
+        sys.exit(0)
+    if word2 in old_text: 
+        out("Tag already there, exiting program.", color="lightred")
+        sys.exit(0)    
+    if redir in old_text: 
+        out("Redirected Page", color="lightred")
+        sys.exit(0) 
+    end = findEndOfTemplate(old_text, "[Aa]ssessments")
+    new_text = (
+            old_text[:end]
+            + "\n{{Picture of the day|%s}}" % formatMotdTemplateTag()
+            + old_text[end:]
+        )
+
+    try:
+        commit(
+            old_text, new_text, file_page, "POTD tagging, see [[Template:Potd/%s]]" % informatdate()
+        )
+    except pywikibot.LockedPage as error:
+        out(
+            "Page is locked '%s', but ignoring since it's just the motd tag."
+            % error,
+            color="lightyellow",
+        )
     
 
 def tagMOTD(filename):
