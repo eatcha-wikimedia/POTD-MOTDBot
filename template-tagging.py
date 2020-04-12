@@ -12,11 +12,11 @@ def formatMotdTemplateTag():
     gar = (TODAY+timedelta(time_to_change)).strftime('%Y|%-m|%-d')
     return gar
 
-def get_motd_page_today():
-    return 'Template:Motd/%s' % informatdate()
-
-def get_potd_page_today():
-    return 'Template:Potd/%s' % informatdate()
+def get_page_today(what):
+    if what is "MOTD":
+        return 'Template:Motd/%s' % informatdate()
+    elif what is "POTD":
+        return 'Template:Potd/%s' % informatdate()
 
 def getfile(text):
     return ("File:"+re.search(r"{{(?:\s*)[MmPp]otd(?:[_\s\-]|)[Ff]ilename(?:\s*)\|(?:1=|)(.*?)\|", text).group(1))
@@ -44,18 +44,14 @@ def findEndOfTemplate(text, template):
     m = re.search(r"{{\s*%s" % template, text)
     if not m:
         return 0
-
     lvl = 0
     cp = m.start() + 2
-
     while cp < len(text):
         ns = text.find("{{", cp)
         ne = text.find("}}", cp)
-
         # If we see no end tag, we give up
         if ne == -1:
             return 0
-
         # Handle case when there are no more start tags
         if ns == -1:
             if not lvl:
@@ -63,7 +59,6 @@ def findEndOfTemplate(text, template):
             else:
                 lvl -= 1
                 cp = ne + 2
-
         elif not lvl and ne < ns:
             return ne + 2
         elif ne < ns:
@@ -111,7 +106,6 @@ def tagPOTD(filename):
             % error,
             color="lightyellow",
         )
-    
 
 def tagMOTD(filename):
     print("motd")
@@ -159,16 +153,14 @@ def tagMOTD(filename):
         )
 
 def main():
-    potd_file = getfile(pywikibot.Page(SITE, get_potd_page_today()).get())
-    motd_file = getfile(pywikibot.Page(SITE, get_motd_page_today()).get())
     try:
-        tagPOTD(potd_file)
+        tagPOTD(getfile(pywikibot.Page(SITE, get_page_today("POTD")).get()))
     except:
         pass
-
-    tagMOTD(motd_file)
-
-
+    try:
+        tagMOTD(getfile(pywikibot.Page(SITE, get_page_today("MOTD")).get()))
+    except:
+        pass
 
 if __name__ == "__main__":
   try:
