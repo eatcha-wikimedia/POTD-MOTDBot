@@ -76,19 +76,9 @@ def tagPOTD(filename):
     if page.isRedirectPage():
         page = pywikibot.Page(SITE, page.getRedirectTarget().title())
     old_text = page.get()
-
-    word1 = "Picture of the day"
-    word2 = "picture of the day"
-    redir = "#REDIRECT"
-    if word1 in old_text: 
-        out("Tag already there, exiting program.", color="lightred")
-        sys.exit(0)
-    if word2 in old_text: 
-        out("Tag already there, exiting program.", color="lightred")
-        sys.exit(0)    
-    if redir in old_text: 
-        out("Redirected Page", color="lightred")
-        sys.exit(0) 
+    if "{{picture of the day" in old_text.lower():
+        out("Tag already there, exiting program.", color="lightyellow")
+        return
     end = findEndOfTemplate(old_text, "[Aa]ssessments")
     new_text = (
             old_text[:end]
@@ -108,27 +98,17 @@ def tagPOTD(filename):
         )
 
 def tagMOTD(filename):
-    print("motd")
     page = pywikibot.Page(SITE, filename)
     if page.isRedirectPage():
         page = pywikibot.Page(SITE, page.getRedirectTarget().title())
     old_text = page.get()
-    print("old text got")
-    word1 = "{{Media of the day"
-    word2 = "{{media of the day"
-    redir = "#REDIRECT"
-    Assdetect = "{{Assessment}}"
-    if word1 in old_text: 
-        out("Tag already there, exiting program.", color="lightred")
-        sys.exit(0)
-    if word2 in old_text:
-        out("Tag already there, exiting program.", color="lightred")
-        sys.exit(0)
-    if redir in old_text: 
-        out("Redirected Page", color="lightred")
-        sys.exit(0)    
+
+    if "{{media of the day" in old_text.lower():
+        out("Tag already there, exiting program.", color="lightyellow")
+        return
+
     end = findEndOfTemplate(old_text, "[Ii]nformation")
-    if Assdetect not in old_text:
+    if "{{assessment}}" not in old_text.lower():
         new_text = (
                 old_text[:end]
                 + "\n=={{Assessment}}==\n{{Media of the day|%s}}\n" % formatMotdTemplateTag()
