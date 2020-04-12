@@ -4,9 +4,13 @@ from datetime import timedelta,datetime
 
 TODAY = datetime.utcnow()
 SITE = pywikibot.Site()
-
+time_to_change = 2
 def informatdate():
-    return (TODAY+timedelta(2)).strftime('%Y-%m-%d')
+    return (TODAY+timedelta(time_to_change)).strftime('%Y-%m-%d')
+
+def formatMotdTemplateTag():
+    gar = (TODAY+timedelta(time_to_change)).strftime('%Y|%-m|%-d')
+    return gar
 
 def get_motd_page_today():
     return 'Template:Motd/%s' % informatdate()
@@ -93,7 +97,43 @@ def tagMOTD(filename):
         return
 
     new_text = None
+    word1 = "{{Media of the day"
+    word2 = "{{media of the day"
+    redir = "#REDIRECT"
+    Assdetect = "{{Assessment}}"
+    if word1 in old_text: 
+        out("Tag already there, exiting program.", color="lightred")
+        sys.exit(0)
+    if word2 in old_text:
+        out("Tag already there, exiting program.", color="lightred")
+        sys.exit(0)
+    if redir in old_text: 
+        out("Redirected Page", color="lightred")
+        sys.exit(0)    
+    end = findEndOfTemplate(old_text, "[Ii]nformation")
+    if Assdetect not in old_text:
+        new_text = (
+                old_text[:end]
+                + "\n=={{Assessment}}==\n{{Media of the day|%s}}\n" % formatMotdTemplateTag()
+                + old_text[end:]
+            )
+    else:
+        new_text = (
+                old_text[:end]
+                + "\n{{Media of the day|%s}}\n" % formatMotdTemplateTag()
+                + old_text[end:]
+                )
 
+    try:
+        commit(
+            old_text, new_text, file_page, "MOTD tagging, from [[Template:Motd/%s]]" % informatdate()
+        )
+    except pywikibot.LockedPage as error:
+        out(
+            "Page is locked '%s', but ignoring since it's just the motd tag."
+            % error,
+            color="lightyellow",
+        )
 
 def main():
     potd_file = getfile(pywikibot.Page(SITE, get_potd_page_today()).get())
