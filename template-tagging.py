@@ -1,11 +1,11 @@
 import pywikibot
-import re, datetime
+import re, datetime,timedelta
 
 TODAY = datetime.datetime.utcnow()
 SITE = pywikibot.Site()
 
 def informatdate():
-    return (TODAY).strftime('%Y-%m-%d')
+    return (TODAY+timedelta(2)).strftime('%Y-%m-%d')
 
 def get_motd_page_today():
     return 'Template:Motd/%s' % informatdate()
