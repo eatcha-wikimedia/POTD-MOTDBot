@@ -2,7 +2,7 @@ import pywikibot
 import re
 from datetime import timedelta,datetime
 
-TODAY = datetime.datetime.utcnow()
+TODAY = datetime.utcnow()
 SITE = pywikibot.Site()
 
 def informatdate():
