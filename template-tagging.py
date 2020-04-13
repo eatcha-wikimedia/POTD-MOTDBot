@@ -85,7 +85,10 @@ def Tagger(filename,what):
     if check_text in old_text.lower():
         out("Tag already there, exiting program.", color="lightyellow")
         return
-    end = findEndOfTemplate(old_text, "[Ii]nformation")
+    if what is "POTD":
+        end = findEndOfTemplate(old_text, "[Aa]ssessments")
+    else:
+        end = findEndOfTemplate(old_text, "[Ii]nformation")
     if "{{assessment}}" not in old_text.lower() and what is "MOTD":
         new_text = (
                 old_text[:end]
