@@ -4,7 +4,7 @@ from datetime import timedelta,datetime
 
 TODAY = datetime.utcnow()
 SITE = pywikibot.Site()
-time_to_change = 39
+
 def informatdate():
     return (TODAY+timedelta(time_to_change)).strftime('%Y-%m-%d')
 
@@ -104,7 +104,7 @@ def Tagger(filename,what):
     except pywikibot.LockedPage as error:
         out("Page is locked '%s', but ignoring since it's just the motd tag."% error, color="lightyellow",)
 
-def main():
+def run():
     try:
         Tagger(getfile(pywikibot.Page(SITE, get_page_today("POTD")).get()),"POTD")
     except:
@@ -113,6 +113,12 @@ def main():
         Tagger(getfile(pywikibot.Page(SITE, get_page_today("MOTD")).get()),"MOTD")
     except:
         pass
+
+def run():
+    for x in range(-365, 366):
+        global time_to_change
+        time_to_change = x
+        main()
 
 if __name__ == "__main__":
   try:
