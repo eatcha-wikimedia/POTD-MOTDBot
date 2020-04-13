@@ -77,7 +77,7 @@ def Tagger(filename,what):
     if what is "POTD":
         check_text = "{{picture of the day"
         summary = "POTD tagging, see [[Template:Potd/%s]]" % informatdate()
-        template = "\n{{Picture of the day|%s}}" % formatMotdTemplateTag()
+        template = "\n{{Picture of the day|%s}}\n" % formatMotdTemplateTag()
     if what is "MOTD":
         check_text = "{{media of the day"
         summary = "MOTD tagging, from [[Template:Motd/%s]]" % informatdate()
