@@ -115,7 +115,8 @@ def run():
         pass
 
 def main():
-    for x in range(-5640, 500):
+    """Tags every thing in 2 months range"""
+    for x in range(-31, 31):
         global time_to_change
         time_to_change = x
         run()
