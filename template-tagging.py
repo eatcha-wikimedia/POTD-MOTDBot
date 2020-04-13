@@ -115,10 +115,10 @@ def run():
         pass
 
 def main():
-    for x in range(-10, 100):
+    for x in range(-365, 366):
         global time_to_change
         time_to_change = x
-        main()
+        run()
 
 if __name__ == "__main__":
   try:
