@@ -115,7 +115,7 @@ def run():
         pass
 
 def main():
-    for x in range(-365, 366):
+    for x in range(-5640, 500):
         global time_to_change
         time_to_change = x
         run()
