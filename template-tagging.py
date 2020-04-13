@@ -88,7 +88,13 @@ def Tagger(filename,what):
     if what is "POTD":
         end = findEndOfTemplate(old_text, "[Aa]ssessments")
     else:
-        end = findEndOfTemplate(old_text, "[Ii]nformation")
+        if re.search(r"\{\{(?:|\s*)[Ll]ocation", old_text):
+            end = findEndOfTemplate(old_text, "[Ll]ocation")
+        elif re.search(r"\{\{(?:|\s*)[Oo]bject[_\s][Ll]ocation", old_text):
+            end = findEndOfTemplate(old_text, "[Oo]bject[_\s][Ll]ocation")
+        else:
+            end = findEndOfTemplate(old_text, "[Ii]nformation")
+
     if "{{assessment}}" not in old_text.lower() and what is "MOTD":
         new_text = (
                 old_text[:end]
