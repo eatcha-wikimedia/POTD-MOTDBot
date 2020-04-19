@@ -85,7 +85,10 @@ def add_to_file(filename,list_of_lang_templates,stuff,template_name):
         filename,
         )
     old_text = page.get()
-    desc_text = re.search(r"\|[Dd]escription(?:\s*?)=(?:\s*?)([\s\S]*?)\n(?:\s*?)\|",old_text).group(1)
+    try:
+        desc_text = re.search(r"\|[Dd]escription(?:\s*?)=(?:\s*?)([\s\S]*?)\n(?:\s*?)\|",old_text).group(1)
+    except AttributeError:
+        return
     text_to_append = ""
     for template in list_of_lang_templates:
         text_to_append = "%s\n%s" % (text_to_append,template)
