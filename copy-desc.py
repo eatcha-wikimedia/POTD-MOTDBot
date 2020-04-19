@@ -91,6 +91,9 @@ def add_to_file(filename,list_of_lang_templates,stuff,template_name):
         text_to_append = "%s\n%s" % (text_to_append,template)
     updated_desc = desc_text + text_to_append
     new_text = old_text.replace(desc_text,updated_desc)
+    if old_text == new_text:
+        out("nothing new to add")
+        return
     summary = "Adding descriptions from [[%s|%s]] template." % (template_name,stuff)
     commit(old_text, new_text, page, summary)
 
