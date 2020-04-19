@@ -128,7 +128,7 @@ def handle(stuff,num):
         filename = "File:"+re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get()).group(1)
     except Exception as e:
         print(e)
-    if page.isRedirectPage():
+    if pywikibot.Page(SITE,filename,).isRedirectPage():
         filename = pywikibot.Page(SITE,filename,).getRedirectTarget().title()
     out("now processing - " + stuff + " - " + filename,color="green")
     if page.exists():
