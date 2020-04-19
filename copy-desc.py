@@ -76,7 +76,7 @@ def get_valid_langs(basepage):
             existant_lang_pages.append(lang_page_name)
     return existant_lang_pages
 
-def add_to_file(filename,list_of_lang_templates):
+def add_to_file(filename,list_of_lang_templates,stuff,template_name):
     page = pywikibot.Page(
         SITE,
         filename,
@@ -88,6 +88,7 @@ def add_to_file(filename,list_of_lang_templates):
         text_to_append = "\n%s" % template
     updated_desc = desc_text + text_to_append
     new_text = old_text.replace(desc_text,updated_desc)
+    summary = "Adding descriptions from [[%s|%s]] template." % (template_name,stuff)
     commit(old_text,new_text,page,summary)
     #print(new_text)
 
@@ -139,7 +140,7 @@ def handle(stuff):
                     lang_add_list.append(lang_add_template)
                 else:
                     continue
-        add_to_file(filename,lang_add_list)
+        add_to_file(filename,lang_add_list,stuff,page_name)
 
 
 def main():
