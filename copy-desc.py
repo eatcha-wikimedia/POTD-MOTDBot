@@ -82,7 +82,7 @@ def add_to_file(filename,list_of_lang_templates,stuff,template_name):
         filename,
         )
     old_text = page.get()
-    desc_text = re.search(r"\|[Dd]escription=([\s\S]*?)\n\|",old_text).group(1)
+    desc_text = re.search(r"\|[Dd]escription(?:\s*?)=(?:\s*?)([\s\S]*?)\n(?:\s*?)\|",old_text).group(1)
     text_to_append = ""
     for template in list_of_lang_templates:
         text_to_append = "\n%s" % template
@@ -111,7 +111,7 @@ def checkIfTemplatePresent(langcode,text):
     return True
 
 def handle(stuff):
-    for num in range(1,5648):
+    for num in range(5,5648):
         dateinformat = informatdate(num) # how many days before
         page_name = get_page_name(stuff,dateinformat)
         page = pywikibot.Page(
