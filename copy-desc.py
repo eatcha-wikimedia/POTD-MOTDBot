@@ -2,8 +2,8 @@
 import re
 import pywikibot
 from datetime import datetime, timedelta
-from googletrans import Translator
-translator = Translator()
+# from googletrans import Translator
+# translator = Translator()
 
 
 SITE = pywikibot.Site()
@@ -11,6 +11,23 @@ SITE = pywikibot.Site()
 def informatdate(prev):
     """Current date in yyyy-mm-dd format."""
     return (datetime.utcnow()-timedelta(days=prev)).strftime('%Y-%m-%d')
+
+def commit(old_text, new_text, page, summary):
+    """Show diff and submit text to page."""
+    out("\nAbout to make changes at : '%s'" % page.title())
+    pywikibot.showDiff(old_text, new_text)
+    page.put(new_text, summary=summary, watchArticle=True, minorEdit=False)
+
+def out(text, newline=True, date=False, color=None):
+    """Just output some text to the consoloe or log."""
+    if color:
+        text = "\03{%s}%s\03{default}" % (color, text)
+    dstr = (
+        "%s: " % TODAY.strftime("%Y-%m-%d %H:%M:%S")
+        if date
+        else ""
+    )
+    pywikibot.stdout("%s%s" % (dstr, text), newline=newline)
 
 def get_page_name(what,dateinformat):
     page_name = None
@@ -71,7 +88,8 @@ def add_to_file(filename,list_of_lang_templates):
         text_to_append = "\n%s" % template
     updated_desc = desc_text + text_to_append
     new_text = old_text.replace(desc_text,updated_desc)
-    print(new_text)
+    commit(old_text,new_text,page,summary)
+    #print(new_text)
 
 def detectUnIdentifedlangs(text):
     regex = r"description(?:\s*)=(?:\s*)({{[\s\S]*?}})\n(?:\s*)\|"
@@ -81,7 +99,6 @@ def detectUnIdentifedlangs(text):
         text_to_remove = ""
     without_identfied_langs = re.sub(text_to_remove,"",text)
     
-    
 def checkIfTemplatePresent(langcode,text):
     regex = "{{(?:\s*)%s(?:\s*)\|" % langcode
 
@@ -89,42 +106,40 @@ def checkIfTemplatePresent(langcode,text):
         re.search(regex,text).group()
     except:
         return False
-    
-
 
     return True
-    
 
 def handle(stuff):
-    dateinformat = informatdate(1) # how many days before
-    page_name = get_page_name(stuff,dateinformat)
-    page = pywikibot.Page(
-        SITE,
-        page_name,)
-    try:
-        filename = "File:"+re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get()).group(1)
-    except Exception as e:
-        print(e)
-    print("now processing - " , stuff, " - ", filename)
-    if page.exists():
-        langs_array = get_valid_langs(page_name)
-        lang_add_list = []
-        for lang in langs_array:
-            print(lang)
-            lang_page = pywikibot.Page(
-                SITE,
-                lang,
-                )
-            try:
-                lang_text = re.search(r"[Dd]escription\|(?:1=|)(.*)\|(?:2=[a-z]{2,3}|(?:[a-z]{2,3}))\|", lang_page.get()).group(1)
-            except Exception as e:
-                print(e)
-            lang_add_template = "{{%s|%s}}" % (re.search(r"\(([a-z]{2,3})\)",lang).group(1), lang_text)
-            if checkIfTemplatePresent(re.search(r"\(([a-z]{2,3})\)",lang).group(1), pywikibot.Page(SITE,filename,).get()) is not True:
-                lang_add_list.append(lang_add_template)
-            else:
-                continue
-    add_to_file(filename,lang_add_list)
+    for num in range(1,5648):
+        dateinformat = informatdate(num) # how many days before
+        page_name = get_page_name(stuff,dateinformat)
+        page = pywikibot.Page(
+            SITE,
+            page_name,)
+        try:
+            filename = "File:"+re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get()).group(1)
+        except Exception as e:
+            print(e)
+        out("now processing - " + stuff + " - "+ filename,color="green")
+        if page.exists():
+            langs_array = get_valid_langs(page_name)
+            lang_add_list = []
+            for lang in langs_array:
+                print(lang)
+                lang_page = pywikibot.Page(
+                    SITE,
+                    lang,
+                    )
+                try:
+                    lang_text = re.search(r"[Dd]escription\|(?:1=|)(.*)\|(?:2=[a-z]{2,3}|(?:[a-z]{2,3}))\|", lang_page.get()).group(1)
+                except Exception as e:
+                    print(e)
+                lang_add_template = "{{%s|%s}}" % (re.search(r"\(([a-z]{2,3})\)",lang).group(1), lang_text)
+                if checkIfTemplatePresent(re.search(r"\(([a-z]{2,3})\)",lang).group(1), pywikibot.Page(SITE,filename,).get()) is not True:
+                    lang_add_list.append(lang_add_template)
+                else:
+                    continue
+        add_to_file(filename,lang_add_list)
 
 
 def main():
