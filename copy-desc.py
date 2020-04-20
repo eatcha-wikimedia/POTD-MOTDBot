@@ -159,7 +159,7 @@ def main():
         "MOTD",
         ]
 
-    for num in range(46,5648):
+    for num in range(85,5648):
         for stuff in day_pages:
             handle(stuff,num)
         
