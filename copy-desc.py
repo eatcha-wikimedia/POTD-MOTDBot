@@ -172,7 +172,10 @@ def main():
 
     for num in range(234,5648):
         for stuff in day_pages:
-            handle(stuff,num)
+            try:
+                handle(stuff,num)
+            except:
+                continue
         
     
 
