@@ -86,7 +86,7 @@ def add_to_file(filename,list_of_lang_templates,stuff,template_name):
         )
     old_text = page.get()
     try:
-        desc_text = re.search(r"[Dd]escription\|(?:1=|)(.*)(?:\n|)\|(?:2=[a-z]{2,3}|(?:[a-z]{2,3}))\|",old_text).group(1)
+        desc_text = re.search(r"\|[Dd]escription(?:\s*?)=(?:\s*?)([\s\S]*?)\n(?:\s*?)\|",old_text).group(1)
     except AttributeError:
         return
     text_to_append = ""
