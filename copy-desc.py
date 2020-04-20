@@ -131,6 +131,9 @@ def handle(stuff,num):
     
     file_page = pywikibot.Page(SITE,filename,)
 
+    if file_page.isRedirectPage():
+        filename = file_page.getRedirectTarget().title()
+
     try:
         file_page_text = pywikibot.Page(SITE,filename,).get()
     except pywikibot.exceptions.NoPage:
@@ -138,8 +141,6 @@ def handle(stuff,num):
         return
     except Exception as e:
         out(e,color="red")
-    if file_page.isRedirectPage():
-        filename = file_page.getRedirectTarget().title()
     out("\n#############################\nnow processing - " + stuff + " - " + filename,color="green")
     if page.exists():
         langs_array = get_valid_langs(page_name)
