@@ -141,7 +141,7 @@ def handle(stuff,num):
                 lang,
                 )
             try:
-                lang_text = re.search(r"[Dd]escription\|(?:1=|)(.*)(?:\n|)\|(?:2=[a-z]{2,3}|(?:[a-z]{2,3}))\|", lang_page.get()).group(1)
+                lang_text = re.search(r"[Dd]escription\|(?:1=|)(.*)(?:\n|)\|(?:2=[a-z]{2,3}|(?:[a-z]{2,3}))\|", lang_page.get() , flags=re.MULTILINE).group(1)
             except Exception as e:
                 out(e,color="red")
                 return
