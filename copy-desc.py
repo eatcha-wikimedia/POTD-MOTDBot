@@ -128,8 +128,11 @@ def handle(stuff,num):
         filename = "File:"+re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get()).group(1)
     except Exception as e:
         out(e,color="red")
+    
+    file_page = pywikibot.Page(SITE,filename,)
+
     try:
-        file_page = pywikibot.Page(SITE,filename,)
+        file_page_text = pywikibot.Page(SITE,filename,).get()
     except pywikibot.exceptions.NoPage:
         out("file deleted",color="red")
         return
@@ -153,7 +156,7 @@ def handle(stuff,num):
                 out(e,color="red")
                 return
             lang_add_template = "{{%s|%s}}" % (re.search(r"\(([a-z]{2,3})\)",lang).group(1), lang_text)
-            if not checkIfTemplatePresent(re.search(r"\(([a-z]{2,3})\)",lang).group(1), file_page.get()):
+            if not checkIfTemplatePresent(re.search(r"\(([a-z]{2,3})\)",lang).group(1), file_page_text):
                 lang_add_list.append(lang_add_template)
             else:
                 continue
