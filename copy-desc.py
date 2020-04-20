@@ -127,7 +127,7 @@ def handle(stuff,num):
     try:
         filename = "File:"+re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get()).group(1)
     except Exception as e:
-        print(e)
+        out(e,color="red")
     if pywikibot.Page(SITE,filename,).isRedirectPage():
         filename = pywikibot.Page(SITE,filename,).getRedirectTarget().title()
     out("now processing - " + stuff + " - " + filename,color="green")
@@ -135,7 +135,7 @@ def handle(stuff,num):
         langs_array = get_valid_langs(page_name)
         lang_add_list = []
         for lang in langs_array:
-            print(lang)
+            out(lang,color="white")
             lang_page = pywikibot.Page(
                 SITE,
                 lang,
@@ -143,9 +143,10 @@ def handle(stuff,num):
             try:
                 lang_text = re.search(r"[Dd]escription\|(?:1=|)(.*)\|(?:2=[a-z]{2,3}|(?:[a-z]{2,3}))\|", lang_page.get()).group(1)
             except Exception as e:
-                print(e)
+                out(e,color="red")
+                return
             lang_add_template = "{{%s|%s}}" % (re.search(r"\(([a-z]{2,3})\)",lang).group(1), lang_text)
-            if checkIfTemplatePresent(re.search(r"\(([a-z]{2,3})\)",lang).group(1), pywikibot.Page(SITE,filename,).get()) is not True:
+            if not checkIfTemplatePresent(re.search(r"\(([a-z]{2,3})\)",lang).group(1), pywikibot.Page(SITE,filename,).get()):
                 lang_add_list.append(lang_add_template)
             else:
                 continue
