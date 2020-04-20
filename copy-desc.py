@@ -128,8 +128,15 @@ def handle(stuff,num):
         filename = "File:"+re.search(r"[Ff]ilename\|(?:1=|)(.*?)\|", page.get()).group(1)
     except Exception as e:
         out(e,color="red")
-    if pywikibot.Page(SITE,filename,).isRedirectPage():
-        filename = pywikibot.Page(SITE,filename,).getRedirectTarget().title()
+    try:
+        file_page = pywikibot.Page(SITE,filename,)
+    except pywikibot.exceptions.NoPage:
+        out("file deleted",color="red")
+        return
+    except Exception as e:
+        out(e,color="red")
+    if file_page.isRedirectPage():
+        filename = file_page.getRedirectTarget().title()
     out("now processing - " + stuff + " - " + filename,color="green")
     if page.exists():
         langs_array = get_valid_langs(page_name)
@@ -146,7 +153,7 @@ def handle(stuff,num):
                 out(e,color="red")
                 return
             lang_add_template = "{{%s|%s}}" % (re.search(r"\(([a-z]{2,3})\)",lang).group(1), lang_text)
-            if not checkIfTemplatePresent(re.search(r"\(([a-z]{2,3})\)",lang).group(1), pywikibot.Page(SITE,filename,).get()):
+            if not checkIfTemplatePresent(re.search(r"\(([a-z]{2,3})\)",lang).group(1), file_page.get()):
                 lang_add_list.append(lang_add_template)
             else:
                 continue
@@ -159,7 +166,7 @@ def main():
         "MOTD",
         ]
 
-    for num in range(85,5648):
+    for num in range(138,5648):
         for stuff in day_pages:
             handle(stuff,num)
         
