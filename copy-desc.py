@@ -140,7 +140,7 @@ def handle(stuff,num):
         out(e,color="red")
     if file_page.isRedirectPage():
         filename = file_page.getRedirectTarget().title()
-    out("now processing - " + stuff + " - " + filename,color="green")
+    out("\n#############################\nnow processing - " + stuff + " - " + filename,color="green")
     if page.exists():
         langs_array = get_valid_langs(page_name)
         lang_add_list = []
