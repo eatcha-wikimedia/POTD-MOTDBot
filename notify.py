@@ -22,15 +22,16 @@ def get_potd_page_today():
 def getfile(text):
     return ("File:"+re.search(r"{{(?:\s*)[MmPp]otd(?:[_\s\-]|)[Ff]ilename(?:\s*)\|(?:1=|)(.*?)\|", text).group(1))
 
-def uploader(file_name, link=True):
-    """Return the link to the user that uploaded this file"""
-    history = pywikibot.Page(SITE,file_name).getVersionHistory(reverseOrder=True, total=1)
+def uploader(filename, link=True):
+    """User that uploaded the file."""
+    history = (pywikibot.Page(SITE, filename)).revisions(reverse=True, total=1)
+    for info in history:
+        username = (info.user)
     if not history:
-        return None
+        return "Unknown"
     if link:
-        return "[[User:%s|%s]]" % (history[0][2], history[0][2])
-    else:
-        return history[0][2]
+        return "[[User:%s|%s]]" % (username, username)
+    return username
 
 def Notify(page,File,What=None):
     old_text = page.get()
@@ -46,7 +47,7 @@ def commit(old_text, new_text, page, summary):
     """Show diff and submit text to page."""
     out("\nAbout to make changes at : '%s'" % page.title())
     pywikibot.showDiff(old_text, new_text)
-    page.put(new_text, summary=summary, watchArticle=True, minorEdit=False)
+    #page.put(new_text, summary=summary, watchArticle=True, minorEdit=False)
 
 def out(text, newline=True, date=False, color=None):
     """Just output some text to the consoloe or log."""
@@ -68,7 +69,7 @@ def main():
     if  potd_uploader and not is_opted_out(potd_uploader):
         potd_uploader_talk_page = pywikibot.Page(SITE, ('User talk:'+potd_uploader))
         Notify(potd_uploader_talk_page,potd_file,What="POTD")
-    if  motd_uploader and not potd_uploader(motd_uploader):
+    if  motd_uploader and not is_opted_out(motd_uploader):
         motd_uploader_talk_page = pywikibot.Page(SITE, ('User talk:'+motd_uploader))
         Notify(motd_uploader_talk_page,motd_file,What="MOTD")
 
