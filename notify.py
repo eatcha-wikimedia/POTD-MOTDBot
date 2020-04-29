@@ -4,6 +4,12 @@ import re, datetime
 TODAY = datetime.datetime.utcnow()
 SITE = pywikibot.Site()
 
+def is_opted_out(uploader_name):
+    page = pywikibot.Page(SITE, "User:EatchaBot/optout")
+    text = page.get()
+    if uploader_name in text:
+        return True
+
 def informatdate():
     return (TODAY).strftime('%Y-%m-%d')
 
@@ -59,10 +65,10 @@ def main():
     potd_uploader = uploader(potd_file, link=False)
     motd_uploader = uploader(motd_file, link=False)
 
-    if  potd_uploader:
+    if  potd_uploader and not is_opted_out(potd_uploader):
         potd_uploader_talk_page = pywikibot.Page(SITE, ('User talk:'+potd_uploader))
         Notify(potd_uploader_talk_page,potd_file,What="POTD")
-    if  motd_uploader:
+    if  motd_uploader and not potd_uploader(motd_uploader):
         motd_uploader_talk_page = pywikibot.Page(SITE, ('User talk:'+motd_uploader))
         Notify(motd_uploader_talk_page,motd_file,What="MOTD")
 
