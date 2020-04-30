@@ -2,8 +2,6 @@
 import re
 import pywikibot
 from datetime import datetime, timedelta
-#from googletrans import Translator
-#translator = Translator()
 
 
 SITE = pywikibot.Site()
@@ -170,7 +168,7 @@ def main():
         "MOTD",
         ]
 
-    for num in range(1726,5648):
+    for num in range(-10,+10):
         for stuff in day_pages:
             try:
                 handle(stuff,num)
