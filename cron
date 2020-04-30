@@ -1,0 +1,5 @@
+37 6 * * * jsub  -once -quiet -N potd_motd_template_tagging python3 /data/project/vrb/POTD-MOTDBot/template-tagging.py
+
+47 23 * * * jsub  -once -quiet -N desc_copy_potd_motd python3 /data/project/vrb/POTD-MOTDBot/copy-desc.py
+
+0 0 * * * jsub  -once -quiet -N commons_potd_motd_notify python3 /data/project/vrb/POTD-MOTDBot/notify.py
