@@ -75,16 +75,18 @@ def Tagger(filename,what):
         page = pywikibot.Page(SITE, page.getRedirectTarget().title())
     old_text = page.get()
     if what is "POTD":
-        check_text = "{{picture of the day"
+        check_text_list = ["{{picture of the day", "POTD=1", "POTDyear=", "POTDmonth=",]
         summary = "POTD tagging, see [[Template:Potd/%s]]" % informatdate()
         template = "\n{{Picture of the day|%s}}\n" % formatMotdTemplateTag()
     if what is "MOTD":
-        check_text = "{{media of the day"
+        check_text_list = ["{{media of the day"]
         summary = "MOTD tagging, from [[Template:Motd/%s]]" % informatdate()
         template = "\n{{Media of the day|%s}}\n" % formatMotdTemplateTag()
-    if check_text in old_text.lower():
-        out("Tag already there, exiting program.", color="lightyellow")
-        return
+    if check_text_list:
+        for check_text in check_text_list:
+            if check_text.lower() in old_text.lower():
+                out("Tag already there, exiting program.", color="lightyellow")
+                return
     if what is "POTD":
         end = findEndOfTemplate(old_text, "[Aa]ssessments")
     else:
